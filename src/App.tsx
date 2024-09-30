@@ -1,17 +1,22 @@
 import { useRef } from "react";
-import Modal from "./components/Modal/Modal";
-import { ModalMethods } from "./components/Modal/Modal.types";
+import Modal from "@/components/Modal/Modal";
+import { ModalMethods } from "@/components/Modal/Modal.types";
+import Button from "@/components/ui/Button";
 
 function App() {
   const modalRef = useRef<ModalMethods>(null);
 
   return (
     <>
-      <button onClick={() => modalRef.current?.openModal()}>Presioname</button>
+      <Button onClick={() => modalRef.current?.openModal()}>Presioname</Button>
       <Modal
-        className="animate-slide-from-bottom"
+        title="Te damos la bienvenida"
+        footer={
+          <footer className="flex flex-row-reverse justify-between ">
+            <Button>Aceptar</Button>
+          </footer>
+        }
         ref={modalRef}
-        showSeparator={false}
       >
         <p>
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet
