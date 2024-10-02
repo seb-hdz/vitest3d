@@ -1,34 +1,38 @@
-import { useRef } from "react";
-import Modal from "@/components/Modal/Modal";
-import { ModalMethods } from "@/components/Modal/Modal.types";
-import Button from "@/components/ui/Button";
+import { Canvas } from "@react-three/fiber";
+import Box from "./Box";
+import Button from "./components/ui/Button";
 
-function App() {
-  const modalRef = useRef<ModalMethods>(null);
+import { FiFastForward, FiPlay, FiRewind } from "react-icons/fi";
 
+const App = () => {
   return (
-    <>
-      <Button onClick={() => modalRef.current?.openModal()}>Presioname</Button>
-      <Modal
-        title="Te damos la bienvenida"
-        footer={
-          <footer className="flex flex-row-reverse justify-between ">
-            <Button>Aceptar</Button>
-          </footer>
-        }
-        ref={modalRef}
-      >
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet
-          veritatis totam, accusantium quis tempora alias, quasi iste dolorem
-          ullam possimus nulla nemo incidunt. Voluptates laboriosam explicabo
-          molestias? Libero consequatur dolorem recusandae perspiciatis error
-          doloremque corporis in dolor id suscipit tenetur quis quo fugit quasi
-          sapiente quisquam, aperiam corrupti eos optio.
-        </p>
-      </Modal>
-    </>
+    <div className="bg-surface-2 flex flex-col h-screen justify-between">
+      <div>
+        <Canvas>
+          <ambientLight intensity={Math.PI / 2} />
+          <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
+          <pointLight
+            position={[-10, -10, -10]}
+            decay={0}
+            intensity={Math.PI}
+          />
+          <Box position={[-1.2, 0, 0]} />
+          <Box position={[1.2, 0, 0]} />
+        </Canvas>
+      </div>
+      <div className="flex bg-gradient-to-t from-surface-2 to-background rounded-t-xl p-4 gap-4 justify-center border-t-black/10 border-t">
+        <Button>
+          <FiRewind />
+        </Button>
+        <Button>
+          <FiPlay />
+        </Button>
+        <Button>
+          <FiFastForward />
+        </Button>
+      </div>
+    </div>
   );
-}
+};
 
 export default App;
