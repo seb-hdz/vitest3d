@@ -34,14 +34,15 @@ const Modal = forwardRef<Methods, Props>((props, ref) => {
         {showBackdrop ? (
           <div
             className={jn(
-              "bg-slate-800/30 absolute h-screen w-screen animate-fade-in",
+              "bg-black/30 absolute h-screen w-screen animate-fade-in hover:cursor-pointer",
               backdropClassName
             )}
+            onClick={() => setOpen(false)}
           />
         ) : null}
         <div
           className={jn(
-            "bg-white p-6 rounded-2xl z-[1] shadow-md animate-modal w-11/12 lg:w-3/4",
+            "bg-surface p-6 rounded-2xl z-[1] shadow-md animate-modal w-11/12 lg:w-3/4 border-surface-2 border",
             className
           )}
         >
@@ -52,11 +53,16 @@ const Modal = forwardRef<Methods, Props>((props, ref) => {
             </div>
             <div>
               {showClose ? (
-                <button onClick={() => setOpen(false)}>&times;</button>
+                <button
+                  className="text-typography font-bold"
+                  onClick={() => setOpen(false)}
+                >
+                  &times;
+                </button>
               ) : null}
             </div>
           </header>
-          {showSeparator ? <hr className="mt-1 mb-2" /> : null}
+          {showSeparator ? <hr className="border-surface-2 mt-1 mb-2" /> : null}
           {children}
           {footer}
         </div>
