@@ -1,10 +1,10 @@
-// import { motion } from "framer-motion";
 import { forwardRef, useImperativeHandle, useState } from "react";
-import { jn } from "../../utils/styles.utils";
+import { jn } from "@/utils/styles.utils";
 import { ModalMethods as Methods, ModalProps as Props } from "./Modal.types";
 
 const Modal = forwardRef<Methods, Props>((props, ref) => {
   const { title, subtitle } = props;
+  const { footer } = props;
   const { children, showClose = true } = props;
   const { showBackdrop = true, showSeparator = true } = props;
   const { className, containerClassName, backdropClassName } = props;
@@ -27,42 +27,50 @@ const Modal = forwardRef<Methods, Props>((props, ref) => {
     >
       <div
         className={jn(
-          "w-1/2 m-auto flex flex-col items-center justify-center relative",
+          "flex flex-col items-center justify-center relative",
           containerClassName
         )}
       >
         {showBackdrop ? (
           <div
             className={jn(
-              "bg-slate-800/30 absolute h-screen w-screen animate-fade-in",
+              "bg-black/30 absolute h-screen w-screen animate-fade-in hover:cursor-pointer",
               backdropClassName
             )}
+            onClick={() => setOpen(false)}
           />
         ) : null}
         <div
-          className={jn("bg-white p-6 rounded-2xl z-[1] shadow-md", className)}
+          className={jn(
+            "bg-surface p-6 rounded-2xl z-[1] shadow-md animate-modal w-11/12 lg:w-3/4 border-surface-2 border",
+            className
+          )}
         >
           <header className="flex flex-row justify-between">
             <div>
-              <h1>{title}</h1>
-              <h2>{subtitle}</h2>
+              <h1 className="text-2xl font-semibold">{title}</h1>
+              <h2 className="text-lg">{subtitle}</h2>
             </div>
             <div>
               {showClose ? (
-                <button onClick={() => setOpen(false)}>&times;</button>
+                <button
+                  className="text-typography font-bold"
+                  onClick={() => setOpen(false)}
+                >
+                  &times;
+                </button>
               ) : null}
             </div>
           </header>
-          {showSeparator ? <hr /> : null}
+          {showSeparator ? <hr className="border-surface-2 mt-1 mb-2" /> : null}
           {children}
-          <footer className="flex flex-row justify-between">
-            <button>cancelar</button>
-            <button>aceptar</button>
-          </footer>
+          {footer}
         </div>
       </div>
     </dialog>
   );
 });
+
+Modal.displayName = "Modal";
 
 export default Modal;
